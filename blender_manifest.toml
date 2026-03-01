@@ -1,6 +1,6 @@
 schema_version = "1.0.0"
 id = "lks_keymap_conflict_resolver"
-version = "0.1.1"
+version = "0.1.2"
 name = "LKS Keymap Conflict Resolver"
 tagline = "Detect and resolve keymap shortcut conflicts in Blender"
 maintainer = "LKS <Liam@lksgraphics.ca>"
