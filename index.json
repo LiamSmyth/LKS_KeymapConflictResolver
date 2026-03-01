@@ -7,7 +7,7 @@
       "id": "lks_keymap_conflict_resolver",
       "name": "LKS Keymap Conflict Resolver",
       "tagline": "Detect and resolve keymap shortcut conflicts in Blender",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "type": "add-on",
       "maintainer": "LKS <Liam@lksgraphics.ca>",
       "license": [
@@ -17,9 +17,9 @@
       "permissions": {
         "files": "Save / load files"
       },
-      "archive_url": "./lks_keymap_conflict_resolver-0.1.1.zip",
-      "archive_size": 22216,
-      "archive_hash": "sha256:e2d14d081c3498e803b9eba7abc3f8f08636a86bffad617e643e157f20b6f492"
+      "archive_url": "./lks_keymap_conflict_resolver-0.1.2.zip",
+      "archive_size": 20420,
+      "archive_hash": "sha256:ac2c3424ea6de6b28b52c10b1e3ea7e863810e2f6516aa06e46a71be0841e20d"
     }
   ]
 }
