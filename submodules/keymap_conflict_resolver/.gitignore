@@ -1,0 +1,11 @@
+# Submodule git ignore
+__pycache__/
+*.pyc
+*.pyo
+*.py[codz]
+*$py.class
+*.so
+*.zip
+*.blend1
+*.blend2
+.vscode/
