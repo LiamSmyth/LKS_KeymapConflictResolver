@@ -4,6 +4,7 @@ The addon by itself, you can check and resolve global hotkeys
 <img width="1290" height="742" alt="image" src="https://github.com/user-attachments/assets/c0574597-4474-435a-a43a-4d04662e20a6" />
 An example of the submodule being used by an addon to display conflicts for addon shortcuts directly in the addon prefs. Allows users to resolve conflicts right in the window by remapping / removing conflicting items.
 
+
 ### Liam notes 
 
 - The addon is meant to be a thin wrapper around the core submodule "keymap_conflict_resolver", as a shared resource so you can build addons with keymap items in the prefs that self-report conflicts, or use a global conflict detector. 
