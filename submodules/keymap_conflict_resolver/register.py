@@ -13,8 +13,6 @@ from . import properties as _properties_module
 from . import draw_utils as _draw_utils_module
 from .ops import (
     lks_ot_scan,
-    lks_ot_unmap_item,
-    lks_ot_remove_item,
     lks_ot_purge_duplicates,
     lks_ot_toggle_addon_warning,
     lks_ot_show_info,
@@ -24,8 +22,6 @@ from .ops import (
 _classes: tuple = (
     _draw_utils_module.LKS_UL_KcrConflictGroups,
     lks_ot_scan.LKS_OT_ScanKeymapConflicts,
-    lks_ot_unmap_item.LKS_OT_UnmapKeymapItem,
-    lks_ot_remove_item.LKS_OT_RemoveKeymapItem,
     lks_ot_purge_duplicates.LKS_OT_PurgeExactDuplicates,
     lks_ot_toggle_addon_warning.LKS_OT_KcrToggleAddonWarning,
     lks_ot_show_info.LKS_OT_KcrShowInfo,
@@ -59,8 +55,6 @@ def reload() -> None:
     importlib.reload(keymap_query)
     importlib.reload(_properties_module)
     importlib.reload(lks_ot_scan)
-    importlib.reload(lks_ot_unmap_item)
-    importlib.reload(lks_ot_remove_item)
     importlib.reload(lks_ot_purge_duplicates)
     importlib.reload(lks_ot_toggle_addon_warning)
     importlib.reload(lks_ot_show_info)
@@ -70,8 +64,6 @@ def reload() -> None:
     _classes = (
         _draw_utils_module.LKS_UL_KcrConflictGroups,
         lks_ot_scan.LKS_OT_ScanKeymapConflicts,
-        lks_ot_unmap_item.LKS_OT_UnmapKeymapItem,
-        lks_ot_remove_item.LKS_OT_RemoveKeymapItem,
         lks_ot_purge_duplicates.LKS_OT_PurgeExactDuplicates,
         lks_ot_toggle_addon_warning.LKS_OT_KcrToggleAddonWarning,
         lks_ot_show_info.LKS_OT_KcrShowInfo,

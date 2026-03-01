@@ -88,6 +88,50 @@ class LKS_UL_KcrConflictGroups(bpy.types.UIList):
 
 
 # ---------------------------------------------------------------------------
+# Selection helpers
+# ---------------------------------------------------------------------------
+
+def _is_item_visible(group_pg, mgr, kc: bpy.types.KeyConfig) -> bool:
+    """Return True if a conflict group passes the current filter criteria."""
+    if mgr.filter.hide_resolved and _is_group_resolved(group_pg, kc):
+        return False
+    search: str = mgr.filter.search_text.lower()
+    if search and not _group_matches_search(group_pg, search):
+        return False
+    return True
+
+
+def _auto_advance_selection(mgr, kc: bpy.types.KeyConfig) -> None:
+    """If the active conflict group is hidden by filters, move to the next visible one.
+
+    Searches forward from the current index first, then wraps around.
+    If no visible items exist, resets to 0 (template_list handles the empty case).
+    """
+    conflicts = mgr.conflicts
+    count: int = len(conflicts)
+    if count == 0:
+        return
+
+    idx: int = mgr.active_conflict_index
+    if idx < 0 or idx >= count:
+        idx = 0
+
+    # Current item is still visible — nothing to do
+    if _is_item_visible(conflicts[idx], mgr, kc):
+        return
+
+    # Search forward from current position
+    for offset in range(1, count):
+        candidate: int = (idx + offset) % count
+        if _is_item_visible(conflicts[candidate], mgr, kc):
+            mgr.active_conflict_index = candidate
+            return
+
+    # No visible items at all — reset to 0
+    mgr.active_conflict_index = 0
+
+
+# ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
@@ -147,6 +191,9 @@ def draw_conflict_resolver(layout: bpy.types.UILayout) -> None:
     filter_row.prop(mgr.filter, "search_text", text="", icon='VIEWZOOM')
 
     box.separator()
+
+    # -- Auto-advance when current selection is hidden by filters --
+    _auto_advance_selection(mgr, kc)
 
     # -- Scrollable conflict group list --
     box.template_list(
@@ -235,19 +282,6 @@ def draw_addon_keymaps(
 # Conflict-resolver internals
 # ---------------------------------------------------------------------------
 
-def _source_badge(source: str) -> str:
-    """Return a short display label for a source string."""
-    if source == "user":
-        return "User"
-    if source == "blender":
-        return "Blender"
-    if source == "addon":
-        return "Add-on"
-    if source.startswith("addon:"):
-        return "Add-on"
-    return source
-
-
 def _is_group_resolved(group_pg, kc: bpy.types.KeyConfig) -> bool:
     """Return True if <= 1 KMI still actively conflicts.
 
@@ -309,7 +343,7 @@ def _draw_conflict_group_detail(
 
     km = kc.keymaps.get(group_pg.km_name)
 
-    # -- KMI rows --
+    # -- KMI rows (native Blender keymap editor) --
     for item_pg in group_pg.items:
         live_kmi = None
         if km is not None:
@@ -320,39 +354,8 @@ def _draw_conflict_group_detail(
             row.label(text=f"{item_pg.kmi_label} (not found)", icon='QUESTION')
             continue
 
-        row = box.row(align=True)
-
-        # Source badge (narrow column)
-        badge = row.row()
-        badge.scale_x = 0.4
-        badge.label(text=_source_badge(item_pg.source))
-
-        # Operator label
-        row.label(text=live_kmi.name)
-
-        # Editable key binding
-        row.prop(live_kmi, "type", text="", full_event=True)
-
-        # Active toggle
-        row.prop(
-            live_kmi, "active", text="",
-            icon='HIDE_OFF' if live_kmi.active else 'HIDE_ON',
-        )
-
-        # Unmap button
-        unmap_op = row.operator(
-            "wm.lks_kcr_unmap_item", text="", icon='PANEL_CLOSE',
-        )
-        unmap_op.km_name = item_pg.km_name
-        unmap_op.kmi_id = item_pg.kmi_id
-
-        # Delete button (user items only)
-        if live_kmi.is_user_defined:
-            del_op = row.operator(
-                "wm.lks_kcr_remove_item", text="", icon='X',
-            )
-            del_op.km_name = item_pg.km_name
-            del_op.kmi_id = item_pg.kmi_id
+        box.context_pointer_set("keymap", km)
+        rna_keymap_ui.draw_kmi([], kc, km, live_kmi, box, 0)
 
 
 # ---------------------------------------------------------------------------
