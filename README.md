@@ -1,8 +1,9 @@
-<img width="1291" height="1312" alt="image" src="https://github.com/user-attachments/assets/f6516822-82a6-43c2-8b0c-639225cb577e" />
 The addon by itself, you can check and resolve global hotkeys
+<img width="1304" height="807" alt="image" src="https://github.com/user-attachments/assets/11092980-5a44-4bec-8e14-e118c7170673" />
 
-<img width="1290" height="742" alt="image" src="https://github.com/user-attachments/assets/c0574597-4474-435a-a43a-4d04662e20a6" />
+
 An example of the submodule being used by an addon to display conflicts for addon shortcuts directly in the addon prefs. Allows users to resolve conflicts right in the window by remapping / removing conflicting items.
+<img width="1293" height="585" alt="image" src="https://github.com/user-attachments/assets/cb2aae4c-92de-491d-81e3-8b9875e033c6" />
 
 
 ### Liam notes 
